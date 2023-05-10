@@ -3,7 +3,7 @@ import styles from '../CSS/styles.module.css';
 
 export default function Cards(props) {
    const { characters } = props;
-   
+   console.log("lista de personajes",characters);
    return(
       //
       
@@ -19,10 +19,12 @@ export default function Cards(props) {
          <h2>{character.species}</h2>
 
          <h2>{character.gender}</h2>
+        
          </div>
          </div>
          </div> 
          )};
+          <h2>pruebadfd</h2>
          </div>
    
       
