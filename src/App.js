@@ -2,12 +2,28 @@
 import Nav from './components/Nav.jsx'
 import Login from './components/login.jsx'
 import Cards from './components/Cards.jsx'
+import Favorites from './components/favorites.jsx'
 import { useState,useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { addFav } from './redux/actions.js'
+import { removeFav } from './redux/actions.js'
 
 
 function App () {
+  const navigate = useNavigate();
+  const [access, setAccess] = useState(false);
+  const location= useLocation();
+  var showNav=false;
+ //const [showNav,setShowNav]= useState(false);
+  if (location.pathname!=='/'){
+      showNav=true;
+  }
+
+  //console.log("valor de shownav en app.js",showNav);*/
   const [showcharacters,showCharacters]= useState(false)
+  
   const [characters, setCharacters] = useState({
     character:[{
       id: 1,
@@ -101,7 +117,38 @@ function App () {
     ]   
   ) 
 */
-  const addCharacter =()=>{
+  const addCharacter =(number)=>{
+
+
+    fetch(`https://rickandmortyapi.com/api/character/${number}`)
+    .then((response) => response.json())
+    .then((data) => {
+       if (data.name) {
+
+        
+        const newcharacter =[{
+      
+          id: data.id,
+          name:data.name,
+          species: data.species,
+          gender: data.gender,
+          image: data.image
+        }]
+        const newlist=characters.character.concat(newcharacter)
+        console.log("valor del data con fetch",newcharacter);
+          //setCharacters((characters) => [...characters, data]);
+          
+          setCharacters({
+            ...characters,
+            character:newlist
+          });
+          
+       } else {
+          window.alert('No hay personajes con ese ID');
+       }
+    });
+
+/*
     console.log("entra submit");
     const newcharacter =[{
       
@@ -117,43 +164,62 @@ function App () {
     setCharacters({
       ...characters,character:newlist
     });
-    
+    */
 
 
   }
 
+  const removeCharacter=(number)=>{
 
  
+
+    const newList= characters.character.filter((character) => character.id!==number);
+
+    setCharacters({
+      ...characters,character:newList
+    });
+
+  }
+
+  const favoritecharacter = ()=>{
+    console.log("character saved");
+    navigate('/favorites')
+  }
+
+  const logout =(e)=>{
+    e.preventDefault();
+    console.log("esta cerrando sesion");
+    setAccess(false);
+    navigate("/");
+  }
+
+  const go_favorites =()=>{
+    navigate("/favorites");
+  }
+  
+    useEffect(() => {
+      !access && navigate('/');
+   }, [access]);
   
   return (
 
     <div >
-
-      
-
-        <div >
         
+        { showNav? <Nav addCharacter={addCharacter} logout={logout} go_favorites={go_favorites}></Nav>:null}
         <Routes>
-       
-        
+                    
         <Route path='/' element={<Login  ></Login>}></Route>
-        <Route path='/home' element={<Nav addCharacter={addCharacter}></Nav>}>
-          
-        
-        </Route>
-        <Route path='app' element={<Cards  characters={characters.character}/>}>  </Route>
-        </Routes>
-  
-        
-         
-        
-   
-        </div>
-      
-     
  
+        
+        
+        <Route path='/home' element={<Cards  characters={characters.character} removeCharacter={removeCharacter} favoritecharacter={favoritecharacter} addFav={addFav} removeFav={removeFav}/>}>  </Route>
+       
 
- 
+        <Route path='/favorites' element={<Favorites  ></Favorites>}></Route>
+        </Routes>
+
+        
+
     </div>
 
   )

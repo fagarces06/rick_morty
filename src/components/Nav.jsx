@@ -1,14 +1,18 @@
-import SearchBar from './SearchBar.jsx'
+
+
 import styles from '../CSS/styles.module.css';
 
-export default function Nav(props) {
-    
-    
-    const {addCharacter}=props;
-    
-    
-    return (
+import { useState } from 'react';
+import SearchBar from './SearchBar';
 
+export default function Nav(props) {
+
+   
+    const {addCharacter,logout, go_favorites }=props;
+
+
+    return (
+        <div>
        <nav className={styles.navbar}>
         <img  src={require('../img/titleweb.png')}  alt="" />
         <div >
@@ -18,12 +22,13 @@ export default function Nav(props) {
         <ol>
             <li><a href=''>Home</a></li>
             <li><a href=''>About</a></li>
-            <li><a href=''>Contact</a></li>
-            <li><a href=''>Contact</a></li>
+            <li><a >Favorites</a></li>
+            <li><a  onClick={(e)=>logout(e)}>Log Out</a></li>
+ 
             
         </ol>
-       </nav>
- 
+       </nav> 
+       </div>
     //   }
     );
  }
