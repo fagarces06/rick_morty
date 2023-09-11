@@ -40,7 +40,7 @@ const ReducerFavorites = (state = initialState, action) => {
       const new_favoriteslist = myFavoritesList_state.filter(
         (i) => i.id !== action.payload
       );
-      
+      //git
       //const newlist_Reducer=[]
       //newlist_Reducer.push(new_favoriteslist);
       
