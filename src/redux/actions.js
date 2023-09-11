@@ -7,7 +7,7 @@ export const REMOVE_FAV= 'REMOVE_FAV';
 
 
 export const addFav =(character)=>{
-   
+    console.log("valor characte en el archivo action.js",character)
     
     return {
         type: ADD_FAV,
@@ -19,7 +19,7 @@ export const addFav =(character)=>{
   
 
 export const removeFav =(id)=>{
-   
+   console.log("archivo action.js",id)
     
     return {
         type: REMOVE_FAV,

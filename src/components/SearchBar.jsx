@@ -6,7 +6,7 @@ export default function SearchBar(props) {
    const [search,setSearch]=useState('');
 
    const search_value=(e)=>{
-      console.log("valor del onchange",e);
+     // console.log("valor del onchange",e);
       setSearch(e.target.value);
    }
    

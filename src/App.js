@@ -135,7 +135,7 @@ function App () {
           image: data.image
         }]
         const newlist=characters.character.concat(newcharacter)
-        console.log("valor del data con fetch",newcharacter);
+      //  console.log("valor del data con fetch",newcharacter);
           //setCharacters((characters) => [...characters, data]);
           
           setCharacters({
@@ -178,7 +178,7 @@ function App () {
     setCharacters({
       ...characters,character:newList
     });
-
+    
   }
 
   const favoritecharacter = ()=>{
@@ -186,16 +186,24 @@ function App () {
     navigate('/favorites')
   }
 
+  const go_home = ()=>{
+ 
+    navigate('/home')
+  }
+
+  const go_favorites = ()=>{
+ 
+    navigate('/favorites')
+  }
+
   const logout =(e)=>{
     e.preventDefault();
-    console.log("esta cerrando sesion");
+   
     setAccess(false);
     navigate("/");
   }
 
-  const go_favorites =()=>{
-    navigate("/favorites");
-  }
+
   
     useEffect(() => {
       !access && navigate('/');
@@ -205,7 +213,7 @@ function App () {
 
     <div >
         
-        { showNav? <Nav addCharacter={addCharacter} logout={logout} go_favorites={go_favorites}></Nav>:null}
+        { showNav? <Nav addCharacter={addCharacter} logout={logout}  go_home={go_home} go_favorites={go_favorites}></Nav>:null}
         <Routes>
                     
         <Route path='/' element={<Login  ></Login>}></Route>
