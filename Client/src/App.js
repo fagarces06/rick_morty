@@ -13,13 +13,22 @@ import axios from 'axios'
 
 function App () {
   const navigate = useNavigate();
-  const [access, setAccess] = useState(true);
+  const [access, setAccess] = useState(false);
   const location= useLocation();
   var showNav=false;
+  /*
   useEffect(() => {
-    !access && navigate('/');
+   // !access && navigate('/');
+    if (access){
+      navigate('/home')
+    }
+    if(access===false){
+      navigate('/')
+    }
+    
  }, [access]);
 
+*/
  //const [showNav,setShowNav]= useState(false);
   if (location.pathname!=='/'){
       showNav=true;
@@ -165,22 +174,28 @@ function App () {
     navigate("/");
   }
 
+
+
   function handleonSubmit(infouser) {
-    console.log(infouser)
+    //console.log(infouser)
     const email=infouser.email;
     const password=infouser.password;
     console.log("ingreso a handlesubmit")
    // const { username, password } = userData;
-    const URL = 'http://localhost:3001/rickandmorty/login'+ `?email=${email}&password=${password}`;
+    const URL = 'http://localhost:3001/rickandmorty/login';
    // const URL= "http://localhost:3001/rickandmorty/login?email=example@gmail.com&password=123fa"
     
-    axios(URL).then(( {data} ) => {
+    axios(URL+ `?email=${email}&password=${password}`).then(( {data} ) => {
   
-      const {acces}=data;  
+      const {access}=data;  
        setAccess(data)
-      console.log("valor de acces",acces)
-       acces && navigate('/home')
-      
+     // console.log("valor de acces",acces)
+       //access && navigate('/home')
+      if(access){
+        navigate('/home')
+      }
+
+
       
     
     });

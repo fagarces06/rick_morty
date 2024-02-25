@@ -15,11 +15,12 @@ function login(req,res){
     console.log("valor de user",user);
     if(user){
         console.log("ingreso a true",res);
-        res.status(200).json({acces:true})
+      
+       return res.status(200).json({access:true})
 
     }else{
         console.log("ingreso al false");
-        res.json({acces:false})
+       return res.status(404).json({access:false})
     }
 
 }
